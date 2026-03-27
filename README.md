@@ -3,7 +3,7 @@
 Web Audio APIを使用してブラウザ上で動作する本格的なアナログ・シンセサイザーのシミュレーターです。
 シンセサイザーの音作りの仕組みを、実際にパラメータ（ノブ）を触りながら視覚的・直感的に学ぶことができます。
 
-🌐 **[デモをプレイする](https://iori-web.github.io/synthlab-interactive/)**
+🌐 **[デモをプレイする](https://i0ri-web.github.io/synthlab-interactive/)**
 
 ## ✨ 特徴 (Features)
 - 🎛️ **ハードウェア風UI**: 全てのパラメータはドラッグ操作可能な「ノブ」と「縦型フェーダー」で操作します。
