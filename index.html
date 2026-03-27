@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynthLab - Analog Knob Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="synth-container">
+        <header>
+            <h1>SynthLab <span
+                    style="font-size: 1.2rem; background: linear-gradient(135deg, #ff00cc, #3333ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PRO</span>
+            </h1>
+            <p>ハードウェア・アナログシンセ風のノブ＆フェーダーUI（上下ドラッグで操作）</p>
+        </header>
+
+        <div class="visualizer-section">
+            <canvas id="oscilloscope" width="1000" height="120"></canvas>
+            <div class="overlay-text">Waveform Visualizer</div>
+        </div>
+
+        <div class="modules-grid">
+            <!-- Oscillator 1 Module -->
+            <div class="module">
+                <h2>Oscillator 1 <span class="module-desc">(主音源)</span></h2>
+                <div class="control-group">
+                    <select id="osc1-wave" class="synth-select" data-param="osc1Wave">
+                        <option value="sine">Sine</option>
+                        <option value="square">Square</option>
+                        <option value="sawtooth" selected>Sawtooth</option>
+                        <option value="triangle">Triangle</option>
+                    </select>
+                </div>
+                <div class="knobs-row">
+                    <div class="knob-group">
+                        <div class="knob" data-param="osc1Oct" data-min="-2" data-max="2" data-value="0" data-step="1">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Octave</div>
+                        <div class="knob-val">0</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="osc1Vol" data-min="0" data-max="1" data-value="0.7"
+                            data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Volume</div>
+                        <div class="knob-val">0.7</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oscillator 2 Module -->
+            <div class="module module-highlight">
+                <h2>Oscillator 2 <span class="module-desc">(厚み)</span></h2>
+                <div class="control-group">
+                    <select id="osc2-wave" class="synth-select" data-param="osc2Wave">
+                        <option value="sine">Sine</option>
+                        <option value="square" selected>Square</option>
+                        <option value="sawtooth">Sawtooth</option>
+                        <option value="triangle">Triangle</option>
+                    </select>
+                </div>
+                <div class="knobs-row">
+                    <div class="knob-group">
+                        <div class="knob" data-param="osc2Oct" data-min="-2" data-max="2" data-value="-1" data-step="1">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Octave</div>
+                        <div class="knob-val">-1</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="osc2Detune" data-min="-50" data-max="50" data-value="10"
+                            data-step="1">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Detune</div>
+                        <div class="knob-val">10</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="osc2Vol" data-min="0" data-max="1" data-value="0.5"
+                            data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Volume</div>
+                        <div class="knob-val">0.5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Envelope Module -->
+            <div class="module">
+                <h2>Envelope ADSR <span class="module-desc">(時間変化)</span></h2>
+                <div class="knobs-row" style="margin-top: 15px;">
+                    <div class="knob-group">
+                        <div class="knob" data-param="atk" data-min="0" data-max="2" data-value="0.05" data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">A</div>
+                        <div class="knob-val">0.05</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="dec" data-min="0" data-max="2" data-value="0.2" data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">D</div>
+                        <div class="knob-val">0.2</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="sus" data-min="0" data-max="1" data-value="0.5" data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">S</div>
+                        <div class="knob-val">0.5</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="rel" data-min="0" data-max="3" data-value="0.5" data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">R</div>
+                        <div class="knob-val">0.5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Module -->
+            <div class="module">
+                <h2>Filter <span class="module-desc">(音色調整)</span></h2>
+                <div class="control-group">
+                    <select id="filter-type" class="synth-select" data-param="filterType">
+                        <option value="lowpass" selected>Lowpass</option>
+                        <option value="highpass">Highpass</option>
+                        <option value="bandpass">Bandpass</option>
+                    </select>
+                </div>
+                <div class="knobs-row">
+                    <div class="knob-group">
+                        <div class="knob" data-param="cutoff" data-min="20" data-max="10000" data-value="2000"
+                            data-step="10">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Cutoff</div>
+                        <div class="knob-val">2000</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="q" data-min="0" data-max="20" data-value="2" data-step="0.1">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Reso</div>
+                        <div class="knob-val">2</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="filterEnv" data-min="0" data-max="100" data-value="25"
+                            data-step="1">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Env Dpt</div>
+                        <div class="knob-val">25</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LFO Module -->
+            <div class="module module-highlight">
+                <h2>LFO <span class="module-desc">(揺らぎ)</span></h2>
+                <div class="control-group">
+                    <select id="lfo-target" class="synth-select" data-param="lfoTarget">
+                        <option value="none">None</option>
+                        <option value="pitch">Pitch</option>
+                        <option value="filter" selected>Filter</option>
+                    </select>
+                </div>
+                <div class="knobs-row">
+                    <div class="knob-group">
+                        <div class="knob" data-param="lfoRate" data-min="0.1" data-max="20" data-value="6"
+                            data-step="0.1">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Rate</div>
+                        <div class="knob-val">6</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="lfoDepth" data-min="0" data-max="100" data-value="10"
+                            data-step="1">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Depth</div>
+                        <div class="knob-val">10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FX Module -->
+            <div class="module module-highlight">
+                <h2>Delay <span class="module-desc">(やまびこ)</span></h2>
+                <div class="knobs-row" style="margin-top: 15px;">
+                    <div class="knob-group">
+                        <div class="knob" data-param="delayTime" data-min="0.01" data-max="1" data-value="0.3"
+                            data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Time</div>
+                        <div class="knob-val">0.3</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="delayFeed" data-min="0" data-max="0.9" data-value="0.3"
+                            data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Feedback</div>
+                        <div class="knob-val">0.3</div>
+                    </div>
+                    <div class="knob-group">
+                        <div class="knob" data-param="delayMix" data-min="0" data-max="1" data-value="0.15"
+                            data-step="0.01">
+                            <div class="knob-dial">
+                                <div class="knob-pointer"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Mix</div>
+                        <div class="knob-val">0.15</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Master Module -->
+            <div class="module master-module">
+                <h2>Master Out</h2>
+                <div class="master-layout">
+                    <!-- Vertical Fader -->
+                    <div class="fader-group">
+                        <div class="vertical-fader" data-param="vol" data-min="0" data-max="1" data-value="0.5"
+                            data-step="0.01">
+                            <div class="fader-track">
+                                <div class="fader-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="knob-label">Master Vol</div>
+                        <div class="knob-val">0.5</div>
+                    </div>
+
+                    <div class="master-controls">
+                        <div class="knob-group" style="align-self: center;">
+                            <div class="knob" data-param="freq" data-min="50" data-max="1000" data-value="440"
+                                data-step="1">
+                                <div class="knob-dial">
+                                    <div class="knob-pointer"></div>
+                                </div>
+                            </div>
+                            <div class="knob-label">Base Pitch</div>
+                            <div class="knob-val">440</div>
+                        </div>
+                        <div class="play-section">
+                            <button id="trigger-btn" class="pad-btn">HOLD TO PLAY</button>
+                            <p class="hint">PCキー「A〜K」でも演奏可</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
